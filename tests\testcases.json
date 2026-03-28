@@ -1,0 +1,218 @@
+{
+  "skill_id": null,
+  "skill_name": "app-development-skill",
+  "version": "1.0.0",
+  "description": "通用应用开发技能，作为基础技能无需特定 skillId",
+  "testcases": [
+    {
+      "id": "tc_create_001",
+      "category": "happy_path",
+      "description": "基础创建计算器应用",
+      "user_input": "帮我创建一个计算器应用",
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--prompt": "帮我创建一个计算器应用",
+          "--format": "json"
+        }
+      }
+    },
+    {
+      "id": "tc_create_002",
+      "category": "happy_path",
+      "description": "创建业务系统",
+      "user_input": "做一个仓库管理系统",
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--prompt": "做一个仓库管理系统",
+          "--format": "json"
+        }
+      }
+    },
+    {
+      "id": "tc_create_003",
+      "category": "happy_path",
+      "description": "创建管理工具",
+      "user_input": "生成一个客户管理工具",
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--prompt": "生成一个客户管理工具",
+          "--format": "json"
+        }
+      }
+    },
+    {
+      "id": "tc_modify_001",
+      "category": "happy_path",
+      "description": "修改应用",
+      "context": {
+        "threadId": "thread_abc123"
+      },
+      "user_input": "把首页改得更简洁",
+      "expected": {
+        "command": "dws aiapp modify",
+        "params": {
+          "--thread-id": "thread_abc123",
+          "--prompt": "把首页改得更简洁",
+          "--format": "json"
+        },
+        "should_not_have": ["--attachments"]
+      }
+    },
+    {
+      "id": "tc_query_001",
+      "category": "happy_path",
+      "description": "查询任务状态",
+      "context": {
+        "taskId": "task_xyz789"
+      },
+      "user_input": "看一下生成进度",
+      "expected": {
+        "command": "dws aiapp query",
+        "params": {
+          "--task-id": "task_xyz789",
+          "--format": "json"
+        }
+      }
+    },
+    {
+      "id": "tc_attachment_001",
+      "category": "attachment",
+      "description": "带截图创建应用",
+      "user_input": "根据这个截图创建类似的系统",
+      "context": {
+        "attachments": [{"name": "截图.png", "type": "image/png", "url": "https://...", "size": 102400}]
+      },
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--attachments": "[{\"name\":\"截图.png\",\"type\":\"image/png\",\"url\":\"https://...\",\"size\":102400}]",
+          "--format": "json"
+        }
+      }
+    },
+    {
+      "id": "tc_attachment_002",
+      "category": "attachment",
+      "description": "带 Excel 创建应用",
+      "user_input": "根据这个表格帮我做个管理系统",
+      "context": {
+        "attachments": [{"name": "数据表.xlsx", "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "url": "https://...", "size": 51200}]
+      },
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--attachments": "[{\"name\":\"数据表.xlsx\",\"type\":\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\"url\":\"https://...\",\"size\":51200}]"
+        }
+      }
+    },
+    {
+      "id": "tc_attachment_003",
+      "category": "attachment",
+      "description": "多附件创建",
+      "user_input": "根据这些资料帮我做个系统",
+      "context": {
+        "attachments": [
+          {"name": "截图.png", "type": "image/png", "url": "https://...", "size": 102400},
+          {"name": "数据表.xlsx", "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "url": "https://...", "size": 51200}
+        ]
+      },
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--attachments": "[{\"name\":\"截图.png\",\"type\":\"image/png\",\"url\":\"https://...\",\"size\":102400},{\"name\":\"数据表.xlsx\",\"type\":\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet\",\"url\":\"https://...\",\"size\":51200}]"
+        }
+      }
+    },
+    {
+      "id": "tc_colloquial_001",
+      "category": "colloquial",
+      "description": "口语化表述 - 帮我做",
+      "user_input": "帮我做一个待办工具",
+      "expected": {
+        "command": "dws aiapp create"
+      }
+    },
+    {
+      "id": "tc_colloquial_002",
+      "category": "colloquial",
+      "description": "口语化表述 - 改一下",
+      "context": {
+        "threadId": "thread_def456"
+      },
+      "user_input": "改一下颜色",
+      "expected": {
+        "command": "dws aiapp modify",
+        "params": {
+          "--thread-id": "thread_def456"
+        },
+        "should_not_have": ["--attachments"]
+      }
+    },
+    {
+      "id": "tc_skill_combo_001",
+      "category": "skill_combination",
+      "description": "组合视觉设计技能",
+      "user_input": "创建一个界面美观的管理工具",
+      "expected": {
+        "command": "dws aiapp create",
+        "params": {
+          "--skills": "official_b3f7380095ef4e31",
+          "--format": "json"
+        }
+      }
+    },
+    {
+      "id": "tc_robustness_001",
+      "category": "robustness",
+      "description": "无 threadId 时要求修改",
+      "user_input": "修改应用的首页",
+      "expected": {
+        "action": "ask_for_threadId",
+        "reason": "modify 需要 threadId，应询问用户是否新建"
+      }
+    },
+    {
+      "id": "tc_param_001",
+      "category": "param_validation",
+      "description": "必须包含 --format json",
+      "user_input": "创建一个表单应用",
+      "expected": {
+        "params": {
+          "--format": "json"
+        },
+        "must_have": "--format json"
+      }
+    },
+    {
+      "id": "tc_mime_001",
+      "category": "param_validation",
+      "description": "附件使用 MIME 类型",
+      "user_input": "根据截图创建应用",
+      "context": {
+        "attachments": [{"name": "test.png", "type": "image/png", "url": "https://...", "size": 100}]
+      },
+      "expected": {
+        "attachment_type_format": "MIME",
+        "must_not_use": ["png", "xlsx", "jpg"],
+        "must_use": ["image/png", "image/jpeg", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]
+      }
+    },
+    {
+      "id": "tc_negative_001",
+      "category": "negative",
+      "description": "modify 不支持附件",
+      "context": {
+        "threadId": "thread_abc123",
+        "attachments": [{"name": "new.png", "type": "image/png", "url": "https://...", "size": 100}]
+      },
+      "user_input": "用这张新图更新应用",
+      "expected": {
+        "should_not_have": ["--attachments"],
+        "reason": "modify 命令不支持附件参数"
+      }
+    }
+  ]
+}
