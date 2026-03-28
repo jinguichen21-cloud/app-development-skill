@@ -1,0 +1,31 @@
+{
+    "name": "app-development-skill",
+    "version": "1.0.0",
+    "description": "通用应用开发技能 — 通过 dws aiapp CLI 快速创建应用、小工具、业务系统",
+    "keywords": [
+        "dingtalk",
+        "app",
+        "development",
+        "应用开发",
+        "小工具",
+        "业务系统",
+        "CRM",
+        "OA",
+        "dws",
+        "aiapp",
+        "skill"
+    ],
+    "author": "DingTalk AI",
+    "license": "MIT",
+    "clawhub": {
+        "requiresBinaries": [
+            "dws"
+        ],
+        "skillId": null,
+        "category": "app-development",
+        "isBaseSkill": true
+    },
+    "scripts": {
+        "test": "echo 'Run testcases.json with skill evaluator'"
+    }
+}
